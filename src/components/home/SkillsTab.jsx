@@ -7,7 +7,7 @@ function SkillsSection({ skills, isScrolled }) {
     <>
       {skills.map((skill, index) => (
         <SkillsBar
-          key={`${skill}-${index}`}
+          key={`${skill.name}-${index}`} // Use skill.name for a more meaningful key
           skill={skill.name}
           value={skill.value}
           isScrolled={isScrolled}
@@ -17,7 +17,11 @@ function SkillsSection({ skills, isScrolled }) {
   );
 }
 
-function SkillsTab({ skills, isScrolled }) {
+function SkillsTab({ skills = [], isScrolled }) {
+  console.log("Skills:", skills);
+
+  if (!skills || skills.length === 0) return null; // Early return if skills is undefined or empty
+
   return (
     <>
       <Col xs={12} md={6}>
@@ -28,12 +32,13 @@ function SkillsTab({ skills, isScrolled }) {
       </Col>
       <Col xs={12} md={6}>
         <SkillsSection
-          skills={skills.slice(Math.floor(skills.length / 2), skills.length)}
+          skills={skills.slice(Math.floor(skills.length / 2))}
           isScrolled={isScrolled}
         />
       </Col>
     </>
   );
 }
+
 
 export default SkillsTab;

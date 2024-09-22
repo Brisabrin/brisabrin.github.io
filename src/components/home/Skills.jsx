@@ -7,10 +7,9 @@ import { Jumbotron } from "./migration";
 import { Container } from "react-bootstrap";
 import { useScrollPosition } from "../../hooks/useScrollPosition";
 
-const Skills = React.forwardRef(({ heading, hardSkills, softSkills }, ref) => {
+const Skills = React.forwardRef(({ heading, keySkills, languages, libraries, softSkills }, ref) => {
   const skillsTabRef = React.useRef(null);
   const [isScrolled, setIsScrolled] = React.useState(false);
-  //const navbarDimensions = useResizeObserver(navbarMenuRef);
 
   useScrollPosition(
     ({ prevPos, currPos }) => {
@@ -19,7 +18,10 @@ const Skills = React.forwardRef(({ heading, hardSkills, softSkills }, ref) => {
     [],
     skillsTabRef
   );
+
   return (
+    console.log("Skills props in Skills component:", { keySkills, languages, libraries, softSkills }),
+
     <Jumbotron ref={skillsTabRef} fluid className="bg-white m-0" id="skills">
       <Container className="p-5 ">
         <h2 ref={skillsTabRef} className="display-4 pb-5 text-center">
@@ -27,17 +29,35 @@ const Skills = React.forwardRef(({ heading, hardSkills, softSkills }, ref) => {
         </h2>
         <Tabs
           className="skills-tabs"
-          defaultActiveKey="hard-skills"
+          defaultActiveKey="technical-skills"
           id="skills-tabs"
           fill
         >
           <Tab
             tabClassName="skills-tab lead"
-            eventKey="hard-skills"
-            title="Technical Skills"
+            eventKey="technical-skills"
+            title="Key"
           >
             <Row className="pt-3 px-1">
-              <SkillsTab skills={hardSkills} isScrolled={isScrolled} />
+              <SkillsTab skills={keySkills} isScrolled={isScrolled} />
+            </Row>
+          </Tab>
+          <Tab
+            tabClassName="skills-tab lead"
+            eventKey="languages"
+            title="Languages"
+          >
+            <Row className="pt-3 px-1">
+              <SkillsTab skills={languages} isScrolled={isScrolled} />
+            </Row>
+          </Tab>
+          <Tab
+            tabClassName="skills-tab lead"
+            eventKey="libraries"
+            title="Libraries/Frameworks"
+          >
+            <Row className="pt-3 px-1">
+              <SkillsTab skills={libraries} isScrolled={isScrolled} />
             </Row>
           </Tab>
           <Tab

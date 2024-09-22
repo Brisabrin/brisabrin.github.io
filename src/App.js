@@ -1,5 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import SpotlightProjects from "./components/home/SpotlightProjectCard"; // Add this import
+
 import {
   navBar,
   mainBody,
@@ -8,7 +10,8 @@ import {
   leadership,
   skills,
   getInTouch,
-  experiences
+  experiences,
+  spotlightProjects
 } from "./editable-stuff/config.js";
 import MainBody from "./components/home/MainBody";
 import AboutMe from "./components/home/AboutMe";
@@ -47,6 +50,12 @@ const Home = React.forwardRef((props, ref) => {
           <Experience experiences={experiences}/>
         )
       }
+      {spotlightProjects.show && (  // Add this block
+        <SpotlightProjects
+          heading={spotlightProjects.heading}
+          projects={spotlightProjects.projects}
+        />
+      )}
       {repos.show && (
         <Project
           heading={repos.heading}
@@ -64,12 +73,16 @@ const Home = React.forwardRef((props, ref) => {
         />
       )}
       {skills.show && (
-        <Skills
-          heading={skills.heading}
-          hardSkills={skills.hardSkills}
-          softSkills={skills.softSkills}
-        />
+      <Skills
+        heading={skills.heading}
+        keySkills={skills.keySkills} // Update to match the "Key" property
+        languages={skills.languages} // Update to match the "Languages" property
+        libraries={skills.libraries} // Update to match the "libraries" property
+        softSkills={skills.softSkills} // Keep as is for soft skills
+      />
       )}
+
+     
       
     </>
   );
@@ -79,7 +92,7 @@ const App = () => {
   const titleRef = React.useRef();
 
   return (
-    <BrowserRouter basename={process.env.PUBLIC_URL + "/"}>
+    <BrowserRouter basename={"/home"}>
       {navBar.show && <Navbar ref={titleRef} />}
       <Routes>
         <Route path="/" exact element={<Home ref={titleRef} />} />
